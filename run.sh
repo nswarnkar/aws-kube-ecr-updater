@@ -25,5 +25,8 @@ do
 	echo
 done
 
-echo "Patching default serviceaccount"
-echo kubectl patch serviceaccount default -p '{"imagePullSecrets":[{"name":"aws-registry"}]}'
+for namespace in ${NAMESPACES}
+do
+	echo "Patching default serviceaccount with namespace:$namespace"
+	echo kubectl patch serviceaccount --namespace=$namespace default -p '{"imagePullSecrets":[{"name":"aws-registry"}]}'
+done
